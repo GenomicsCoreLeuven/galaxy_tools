@@ -1,0 +1,150 @@
+<tool id="gbsx_demultiplexer" name="GBSX: Demultiplexer" force_history_refresh="True" version="1.1.5">
+  <description>demultiplexes inline barcodes from GBS and RAD experiments</description>
+  <requirements>
+    <requirement type="set_environment">GBSX_PATH</requirement>
+    <requirement type="package" version="1.1.5">GBSX</requirement>
+  </requirements>
+  <command interpreter="sh">
+        #if $singleOrPaired.SR_PE_select=="SR"
+            gbsx_demultiplexer.sh $SR_Read 0 $info_file $barcodeMismatch $enzymeMismatch $rad_gbs_select $demultiplex_stats
+        #else
+            gbsx_demultiplexer.sh $PE_Read1 $PE_Read2 $info_file $barcodeMismatch $enzymeMismatch $rad_gbs_select $demultiplex_stats
+        #end if
+    </command>
+  <inputs>
+    <conditional name="singleOrPaired">
+        <param name="SR_PE_select" type="select" label="How did you sequence?">
+            <option value="SR">Single Read</option>
+            <option value="PE">Paired End</option>
+        </param>
+        <when value="SR">
+            <param name="SR_Read" format="fastq" type="data" label="Single Read Fastq File" />
+        </when>
+        <when value="PE">
+            <param name="PE_Read1" format="fastq" type="data" label="Paired End Fastq File Read 1" />
+            <param name="PE_Read2" format="fastq" type="data" label="Paired End Fastq File Read 2" />
+        </when>
+    </conditional>
+    <param name="info_file" format="tabular" type="data" label="Info File" help="see help below" />
+    <param name="barcodeMismatch" size="4" type="integer" value="1" min="0" max="3" label="Number of mismatches allowed in the barcode:" />
+    <param name="enzymeMismatch" size="4" type="integer" value="1" min="0" max="3" label="Number of mismatches allowed in the enzyme cutsite:" />
+
+
+    <param name="rad_gbs_select" size="4" type="select" label="Experiment type:" help="see help below" >
+        <option value="false">GBS</option>
+		<option value="true">RAD</option>
+    </param>
+  </inputs>
+  <outputs>
+    <data format="tabular" name="demultiplex_stats" label="GBSX: Demultiplexer: Demultiplex stats" />
+    <data format="txt" name="report">
+		<discover_datasets pattern="__designation__" ext="fastq" directory="gbsx_demultiplex" visible="true" />
+    </data>
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="SR_Read" value="gbsx_demultiplex_data.R1.fastq"/>
+      <param name="PE_Read1" value="gbsx_demultiplex_data.R1.fastq"/>
+      <param name="PE_Read2" value="gbsx_demultiplex_data.R2.fastq"/>
+      <param name="info_file" value="gbsx_demultiplex_barcode_list.tsv"/>
+      <param name="barcodeMismatch" value="1"/>
+      <param name="enzymeMismatch" value="1"/>
+      <param name="rad_gbs_select" value="false"/>
+      <output name="demultiplex_stats" file="gbsDemultiplex.stats"/>
+    </test>
+  </tests>
+
+  <help>
+
+.. class:: infomark
+
+**Overview**
+
+Genotyping by Sequencing is an emerging technology for cost effective variant discovery and genotyping. However, current analysis tools do not fulfill all experimental design and analysis needs.
+
+GBSX is a package of tools to first aid in experimental design, including choice of enzymes and barcode design. Secondly, it provides a first analysis step to demultiplex samples using in-line barcodes, providing fastq files that can easily be plugged into existing variant analysis pipelines.
+
+----
+
+**What it does**
+
+This toolkit demultiplexes the samples using inline barcodes, for GBS and RAD experiments.
+
+For the demultiplexing we adjust the original barcode_list.txt file. Sample names are added in the first column, the second column will be the generated barcodes, the last column will be the restriction enzyme.
+
+Only the most used options are included. For more options, please use the command line version of GBSX.
+
+--------
+
+**Help**
+
+This program demultiplexes fastq files obtained from sequencing with inline barcodes. Like used in GBS, RAD, ... protocols.
+
+You can demultiplex Single Read and Paired end experiments. The correct sequence method can be selected with the 'How did you sequence?' parameter. Paired end libraries must be split in 2 files, with the regular Read1 and Read2 fastq file definitions.
+
+Info File: this is a tab delimeted file without headings, with three (or more) columns: sample name (only letters, numbers and underscores are allowed), sequence of the barcode, name of the enzyme, name of the second enzyme (optional, can be an empty string), the second barcode (optional, can be an empty string). This can be the output of the GBSX: Barcode Generator.
+
+Number of mismatches allowed leaves an option open for the recovering of possible sequencing errors.
+
+Experiment type: GBS is the Genotype-by-sequencing protocol where the sequenced reads are inlineBarcode-RestrictionEnzyme-insert-RestrictionEnzyme-CommonAdaptor. RAD is the Restriction site Associated DNA protocol where the sequenced reads are inlineBarcode-RestrictionEnzyme-insert-CommonAdaptor. 
+
+Note: if you want to demultiplex data containing inline barcodes, without restriction enzymes, you should use the RAD parameter and give NA as Restriction Enzyme. The sequenced reads are inlineBarcode-insert-CommonAdaptor.
+
+The used Common Adaptor is: AGATCGGAAGAGCG
+
+After the tool finished running, a history refresh is needed.
+
+----
+
+**Created by:**
+
+Koen Herten, 
+
+Genomics Core Leuven, 
+
+Belgium
+
+----
+
+**Project links:**
+
+https://github.com/GenomicsCoreLeuven/GBSX
+
+----
+
+**Integrated by:**
+
+Koen Herten
+
+Genomics Core
+
+Center for Human Genetics
+
+UZ – KU Leuven
+
+Herestraat 49 PO box 602
+
+B-3000 Leuven, Belgium
+
+If you use this tool in Galaxy, please cite:
+
+  </help>
+<citations>
+    <citation type="doi">10.1186/s12859-015-0514-3</citation>
+
+    <citation type="bibtex">@INPROCEEDINGS{
+    author = {Herten, Koen and Hestand, Matthew S. and Vermeesch, Joris R. and Van Houdt, Jeroen KJ},
+	doi = {10.1186/s12859-015-0514-3},
+	issn = {1471-2105},
+	journal = {BMC Bioinformatics},
+	number = {1},
+	pages = {1–6},
+	title = {GBSX: a toolkit for experimental design and demultiplexing genotyping by sequencing experiments},
+	url = {http://dx.doi.org/10.1186/s12859-015-0514-3},
+	volume = {16},
+	year = {2015}
+    }</citation>
+</citations>
+
+</tool>

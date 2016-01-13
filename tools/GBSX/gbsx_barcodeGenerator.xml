@@ -1,0 +1,135 @@
+<tool id="gbsx_barcodeGenerator" name="GBSX: Barcode Generator" version="1.1.5">
+  <description>creates inline barcodes for a given enzyme</description>
+  <requirements>
+    <requirement type="set_environment">GBSX_PATH</requirement>
+    <requirement type="package" version="1.1.5">GBSX</requirement>
+  </requirements>
+  <command interpreter="sh">gbsx_barcodeGenerator.sh $barcode $enzyme $barcode_list $barcode_summary</command>
+  <inputs>
+    <param name="barcode" size="4" type="integer" value="5" min="1" max="20000" label="Number of barcodes to generate" />
+    <param name="enzyme" size="4" type="select" label="The enzyme to use" >
+        <option value="ApeKI">ApeKI</option>
+		<option value="PstI">PstI</option>
+		<option value="EcoT22I">EcoT22I</option>
+		<option value="PasI">PasI</option>
+		<option value="HpaII">HpaII</option>
+		<option value="MspI">MspI</option>
+		<option value="PstI-EcoT22I">PstI-EcoT22I</option>
+		<option value="PstI-MspI">PstI-MspI</option>
+		<option value="PstI-TaqI">PstI-TaqI</option>
+		<option value="SbfI-MspI">SbfI-MspI</option>
+		<option value="AsiSI-MspI">AsiSI-MspI</option>
+		<option value="BssHII-MspI">BssHII-MspI</option>
+		<option value="FseI-MspI">FseI-MspI</option>
+		<option value="SalI-MspI">SalI-MspI</option>
+		<option value="ApoI">ApoI</option>
+		<option value="BamHI">BamHI</option>
+		<option value="MseI">MseI</option>
+		<option value="Sau3AI">Sau3AI</option>
+		<option value="RBSTA">RBSTA</option>
+		<option value="RBSCG">RBSCG</option>
+		<option value="NspI">NspI</option>
+		<option value="AvaII">AvaII</option>
+		<option value="NA">NA</option>
+    </param>
+  </inputs>
+  <outputs>
+    <data format="tabular" name="barcode_list" label="GBSX: Barcode Generator: Barcode List" />
+    <data format="txt" name="barcode_summary" label="GBSX: Barcode Generator: Summary" />
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="barcode" value="5"/>
+      <param name="enzyme" value="ApeKI"/>
+      <output name="barcode_list">
+        <assert_contents>
+          <has_n_columns n="3" />
+          <has_text_matching expression="^sample[1-9]+\t[AGCT]*\tApeKI" />
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+
+  <help>
+
+.. class:: infomark
+
+**Overview**
+
+Genotyping by Sequencing is an emerging technology for cost effective variant discovery and genotyping. However, current analysis tools do not fulfill all experimental design and analysis needs.
+
+GBSX is a package of tools to first aid in experimental design, including choice of enzymes and barcode design. Secondly, it provides a first analysis step to demultiplex samples using in-line barcodes, providing fastq files that can easily be plugged into existing variant analysis pipelines.
+
+----
+
+This toolkit generates the given number of variating barcodes in combination with the given enzyme for GBS and RAD experiments.
+
+The outcome of this tool will always be different. This is because the generated barcodes are completely random. The best practice is to manually check the position matrix to see if every bases occurs equally on every position.
+
+Only the most used options are included. For more options, please use the command line version of GBSX.
+
+----
+
+**Created by:**
+
+Koen Herten, 
+
+Genomics Core Leuven, 
+
+Belgium
+
+
+----
+
+**Example:**
+
+The outcome of this tool will always be different.
+
+----
+
+**Project links:**
+
+https://github.com/GenomicsCoreLeuven/GBSX
+
+----
+
+**Integrated by:**
+
+Koen Herten
+
+Genomics Core
+
+Center for Human Genetics
+
+UZ – KU Leuven
+
+Herestraat 49 PO box 602
+
+B-3000 Leuven, Belgium
+
+
+
+If you use this tool in Galaxy, please cite:
+
+
+  </help>
+<citations>
+    <citation type="doi">10.1186/s12859-015-0514-3</citation>
+
+    <citation type="bibtex">@INPROCEEDINGS{
+    author = {Herten, Koen and Hestand, Matthew S. and Vermeesch, Joris R. and Van Houdt, Jeroen KJ},
+	doi = {10.1186/s12859-015-0514-3},
+	issn = {1471-2105},
+	journal = {BMC Bioinformatics},
+	number = {1},
+	pages = {1–6},
+	title = {GBSX: a toolkit for experimental design and demultiplexing genotyping by sequencing experiments},
+	url = {http://dx.doi.org/10.1186/s12859-015-0514-3},
+	volume = {16},
+	year = {2015}
+    }</citation>
+</citations>
+
+
+</tool>
