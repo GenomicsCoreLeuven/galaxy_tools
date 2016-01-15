@@ -5,6 +5,8 @@
             <actions>
                 <action type="download_by_url">https://github.com/GenomicsCoreLeuven/GBSX/releases/download/v1.1.5/GBSX_v1.1.5.jar</action>
                 <action type="move_file" rename_to="GBSX.jar"><source>GBSX_v1.1.5.jar</source><destination>$INSTALL_DIR</destination></action>
+                <action type="download_by_url">https://github.com/GenomicsCoreLeuven/GBSX/releases/download/v1.1.5/GBSX_digest_v1.1.pl</action>
+                <action type="move_file" rename_to="GBSX_digest.pl"><source>GBSX_digest_v1.1.pl</source><destination>$INSTALL_DIR</destination></action>
                 <action type="set_environment">
                     <environment_variable name="GBSX_PATH" action="set_to">$INSTALL_DIR</environment_variable>
                 </action>

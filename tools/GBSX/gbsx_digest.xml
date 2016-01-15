@@ -1,0 +1,143 @@
+<tool id="gbsx_digest" name="GBSX: Digest" version="1.1.5">
+  <description>simulates a digest for the selection of the best enzymes</description>
+  <requirements>
+    <requirement type="package" version="1.1.5">GBSX</requirement>
+  </requirements>
+  <command interpreter="sh">
+    gbsx_digest.sh $genome $read_length $enzyme_combination $adv.min_size $adv.max_size $digest_bed $digest_result
+</command>
+  <inputs>
+    <param name="genome" format="fasta" type="data" label="The reference genome" />
+    <param name="read_length" size="20" type="integer" value="150" min="1" max="1000" label="The length of the reads to generate" />
+    <param name="enzyme_combination" size="4" type="select" label="The enzyme to use" >
+        <option value="ApeKI">ApeKI</option>
+		<option value="PstI">PstI</option>
+		<option value="EcoT22I">EcoT22I</option>
+		<option value="PasI">PasI</option>
+		<option value="HpaII">HpaII</option>
+		<option value="MspI">MspI</option>
+		<option value="PstI-EcoT22I">PstI-EcoT22I</option>
+		<option value="PstI-MspI">PstI-MspI</option>
+		<option value="PstI-TaqI">PstI-TaqI</option>
+		<option value="SbfI-MspI">SbfI-MspI</option>
+		<option value="AsiSI-MspI">AsiSI-MspI</option>
+		<option value="BssHII-MspI">BssHII-MspI</option>
+		<option value="FseI-MspI">FseI-MspI</option>
+		<option value="SalI-MspI">SalI-MspI</option>
+		<option value="ApoI">ApoI</option>
+		<option value="BamHI">BamHI</option>
+		<option value="MseI">MseI</option>
+		<option value="Sau3AI">Sau3AI</option>
+		<option value="RBSTA">RBSTA</option>
+		<option value="RBSCG">RBSCG</option>
+		<option value="NspI">NspI</option>
+		<option value="AvaII">AvaII</option>
+    </param>
+  <section name="adv" title="Advanced Options" expanded="False">
+    <param name="min_size" size="20" type="integer" value="100" min="1" max="1000" label="The minimum size of the digest fragments to keep" />
+    <param name="max_size" size="20" type="integer" value="1000" min="1" max="10000" label="The minimum size of the digest fragments to keep" />
+  </section>
+  </inputs>
+  <outputs>
+    <data format="bed" name="digest_bed" label="GBSX: digest: fragments" />
+    <data format="txt" name="digest_result" label="GBSX: digest: results" />
+  </outputs>
+
+  <tests>
+    <test>
+      <param name="barcode" value="5"/>
+      <param name="enzyme" value="ApeKI"/>
+      <output name="barcode_list">
+        <assert_contents>
+          <has_n_columns n="3" />
+          <has_text_matching expression="^sample[1-9]+\t[AGCT]*\tApeKI" />
+        </assert_contents>
+      </output>
+    </test>
+  </tests>
+
+  <help>
+
+.. class:: infomark
+
+**Overview**
+
+Genotyping by Sequencing is an emerging technology for cost effective variant discovery and genotyping. However, current analysis tools do not fulfill all experimental design and analysis needs.
+
+GBSX is a package of tools to first aid in experimental design, including choice of enzymes and barcode design. Secondly, it provides a first analysis step to demultiplex samples using in-line barcodes, providing fastq files that can easily be plugged into existing variant analysis pipelines.
+
+----
+
+This tool simulates the restriction digest. The output is a file with all possible sequenced reads, and an overview file.
+
+This will generate 2 files: genome.Enzyme.100nt.digest.bed and genome.Enzyme.100nt.digest_results.
+The bed file contains all start-stop locations of the sequenced portion (based on a read length of 100bp) of all fragments that are above or equal to 100bp and below or equal to 1000bp in length. The results file give a brief summary of the fragments, including the total number of fragments and the number of fragments between 100-1000bp. For fragments between 100-1000bp, the results file also indicates the number of fragments per chromosome, the distribution of distances between fragments, and the distribution of fragment lengths.
+
+When using this digest-tool for research, it is possible to determine the SNPs that will be sequenced. This generated bed file can be used with bedtools, dbSNP, and can be uploaded in ucsc as a custom track. 
+
+Only the most used options are included. For more options, please use the command line version of GBSX.
+
+----
+
+**Created by:**
+
+Koen Herten, 
+
+Genomics Core Leuven, 
+
+Belgium
+
+
+----
+
+**Example:**
+
+The outcome of this tool will always be different.
+
+----
+
+**Project links:**
+
+https://github.com/GenomicsCoreLeuven/GBSX
+
+----
+
+**Integrated by:**
+
+Koen Herten
+
+Genomics Core
+
+Center for Human Genetics
+
+UZ – KU Leuven
+
+Herestraat 49 PO box 602
+
+B-3000 Leuven, Belgium
+
+
+
+If you use this tool in Galaxy, please cite:
+
+
+  </help>
+<citations>
+    <citation type="doi">10.1186/s12859-015-0514-3</citation>
+
+    <citation type="bibtex">@INPROCEEDINGS{
+    author = {Herten, Koen and Hestand, Matthew S. and Vermeesch, Joris R. and Van Houdt, Jeroen KJ},
+	doi = {10.1186/s12859-015-0514-3},
+	issn = {1471-2105},
+	journal = {BMC Bioinformatics},
+	number = {1},
+	pages = {1–6},
+	title = {GBSX: a toolkit for experimental design and demultiplexing genotyping by sequencing experiments},
+	url = {http://dx.doi.org/10.1186/s12859-015-0514-3},
+	volume = {16},
+	year = {2015}
+    }</citation>
+</citations>
+
+
+</tool>
