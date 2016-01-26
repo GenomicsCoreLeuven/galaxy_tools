@@ -1,7 +1,8 @@
 <tool id="gbsx_digest" name="GBSX: Digest" version="1.1.5">
   <description>simulates a digest for the selection of the best enzymes</description>
   <requirements>
-    <requirement type="package" version="1.1.5">GBSX</requirement>
+    <requirement type="package" version="1.2">GBSX</requirement>
+    <requirement type="package" version="1.6.922">bioperl</requirement>
   </requirements>
   <command interpreter="sh">
     gbsx_digest.sh $genome $read_length $enzyme_combination $adv.min_size $adv.max_size $digest_bed $digest_result

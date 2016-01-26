@@ -15,6 +15,6 @@
         <readme>Installs the GBSX jar.</readme>
     </package>
     <package name="bioperl" version="1.6.922">
-      <repository name="package_bioperl_1_6" changeset_revision="0:5ef71da82044" owner="iuc" prior_installation_required="True" toolshed="https://toolshed.g2.bx.psu.edu/" />
+      <repository name="package_bioperl_1_6" changeset_revision="5ef71da82044" owner="iuc" prior_installation_required="True" toolshed="https://toolshed.g2.bx.psu.edu/" />
     </package>
 </tool_dependency>
