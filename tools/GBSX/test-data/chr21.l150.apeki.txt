@@ -1,0 +1,36 @@
+input parameters:
+	enzyme name used: ApeKI
+	enzyme cut sequence: G^CWGC
+	for bedfile, genome name used: genome
+	read length provided: 150
+minimum fragment size: 100
+maximum fragment size: 1000
+
+reference sequence(s) analyzed:
+	chr21.fa
+
+total cuts for enzyme (ApeKI): 62623
+
+looked at 62624 fragments in total
+35553 fragments <= 1000 nt and >= 100 nt
+	fragments in range per reference sequence:
+		chr21 had 35553 fragments
+	distances between fragments in range:
+		<=1kb 28216 fragment pairs
+		1kb-10kb 7209 fragment pairs
+		10kb-100kb 125 fragment pairs
+		100kb-1Mb 1 fragment pairs
+		1Mb-10Mb 1 fragment pairs
+		>10Mb 0 fragment pairs
+	fragments less than 100 nt: 16329 
+
+	fragments 100-199 nt: 9755
+	fragments 200-299 nt: 6571
+	fragments 300-399 nt: 4853
+	fragments 400-499 nt: 3701
+	fragments 500-599 nt: 2936
+	fragments 600-699 nt: 2430
+	fragments 700-799 nt: 2004
+	fragments 800-899 nt: 1789
+	fragments 900-999 nt: 1496
+

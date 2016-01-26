@@ -45,14 +45,11 @@
 
   <tests>
     <test>
-      <param name="barcode" value="5"/>
+      <param name="genome" value="chr21.fa"/>
+      <param name="read_length" value="150"/>
       <param name="enzyme" value="ApeKI"/>
-      <output name="barcode_list">
-        <assert_contents>
-          <has_n_columns n="3" />
-          <has_text_matching expression="^sample[1-9]+\t[AGCT]*\tApeKI" />
-        </assert_contents>
-      </output>
+      <output name="digest_bed" file="chr21.l150.apeki.bed"/>
+      <output name="digest_result" file="chr21.l150.apeki.txt"/>
     </test>
   </tests>
 
